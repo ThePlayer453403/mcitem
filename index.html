@@ -1,0 +1,20 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<img id="icon">
+<a id="awnser"></a>
+<script>
+    let date = new Date(), year=date.getFullYear(), month=date.getMonth()+1, day=date.getDate();
+    if (month<10) month = `0${month}`
+    if (day<10) day = `0${day}`
+    const Http = new XMLHttpRequest();
+    const url = `https://xiaoce.fun/api/v0/quiz/daily/mc/get?date=${year}${month}${day}`;
+    Http.open("GET", url);
+    Http.send();
+    Http.onreadystatechange = (e) => {
+        if (Http.readyState == 4 && Http.status == 200) {
+            var json = JSON.parse(Http.responseText);
+            console.log(json)
+            document.getElementById("awnser").innerText = json["data"]["item"]["displayNameZh"]
+            document.getElementById("icon").src = "https://b68v.daai.fun/quiz/minecraft/" + json["data"]["item"]["iconFile"]
+        }
+    }
+</script>
